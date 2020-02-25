@@ -16,32 +16,29 @@
             android:layout_width="0dp"
             android:layout_height="@dimen/movieGroupHeight"
             app:layout_constraintLeft_toLeftOf="parent"
-            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintRight_toLeftOf="@id/secondGroup"
             app:layout_constraintTop_toTopOf="parent" />
-
         <androidx.constraintlayout.widget.Group
             android:id="@+id/secondGroup"
             android:layout_width="0dp"
             android:layout_height="@dimen/movieGroupHeight"
-            app:layout_constraintHorizontal_bias="0.0"
-            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintLeft_toRightOf="@id/firstGroup"
             app:layout_constraintRight_toRightOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/firstGroup" />
-
+            app:layout_constraintTop_toTopOf="parent" />
         <androidx.constraintlayout.widget.Group
             android:id="@+id/thirdGroup"
             android:layout_width="0dp"
             android:layout_height="@dimen/movieGroupHeight"
             app:layout_constraintLeft_toLeftOf="parent"
-            app:layout_constraintRight_toRightOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/secondGroup" />
+            app:layout_constraintRight_toLeftOf="@id/fourthGroup"
+            app:layout_constraintTop_toBottomOf="@id/firstGroup" />
         <androidx.constraintlayout.widget.Group
             android:id="@+id/fourthGroup"
             android:layout_width="0dp"
             android:layout_height="@dimen/movieGroupHeight"
-            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintLeft_toRightOf="@id/thirdGroup"
             app:layout_constraintRight_toRightOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/thirdGroup" />
+            app:layout_constraintTop_toBottomOf="@id/secondGroup" />
 
         <ImageView
             android:id="@+id/firstMovieImage"

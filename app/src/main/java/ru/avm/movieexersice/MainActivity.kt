@@ -3,6 +3,8 @@ package ru.avm.movieexersice
 import android.content.Intent
 import android.os.Bundle
 import android.util.Log
+import android.view.Menu
+import android.view.View
 import android.widget.Button
 import android.widget.ImageView
 import android.widget.TextView
@@ -19,7 +21,7 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
         
-        findViewById<Button>(R.id.invite).setOnClickListener {
+        findViewById<View>(R.id.action_invite).setOnClickListener {
             Intent().apply {
                 action = Intent.ACTION_SEND
                 type = "text/plain"
@@ -68,6 +70,11 @@ class MainActivity : AppCompatActivity() {
         }
     }
 
+    override fun onCreateOptionsMenu(menu: Menu?): Boolean {
+        menuInflater.inflate(R.menu.menu_main, menu)
+        return super.onCreateOptionsMenu(menu)
+    }
+
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
         data?.let {
@@ -82,6 +89,6 @@ class MainActivity : AppCompatActivity() {
         const val REQUEST_CODE = 123
         const val SAVED_SELECTED_INDEX = "ssi"
         const val RESULT_CODE = "userInput"
-        val GROUPS = arrayOf("first", "second", "third")
+        val GROUPS = arrayOf("first", "second", "third", "fourth")
     }
 }
