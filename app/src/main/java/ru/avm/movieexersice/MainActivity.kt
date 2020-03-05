@@ -9,18 +9,18 @@ import android.widget.Button
 import android.widget.ImageView
 import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
+import androidx.appcompat.app.AppCompatDelegate
 import androidx.core.content.ContextCompat
 import ru.avm.movieexersice.dto.UserInput
 import ru.avm.movieexersice.service.MovieService
 
 class MainActivity : AppCompatActivity() {
 
-    var selectedIndex: Int = -1
+    private var selectedIndex: Int = -1
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
-        
         savedInstanceState?.let {
             selectedIndex = it.getInt(SAVED_SELECTED_INDEX, -1)
         }
@@ -52,9 +52,9 @@ class MainActivity : AppCompatActivity() {
             findViewById<TextView>(resources.getIdentifier("${group}Title", "id", packageName))?.let {
                 it.text = MovieService.movies[index].title
                 if (selectedIndex == index) {
-                    it.setTextColor(ContextCompat.getColor(this@MainActivity, R.color.colorFocused))
+                    it.setTextColor(ContextCompat.getColor(this@MainActivity, R.color.colorAccent))
                 } else {
-                    it.setTextColor(ContextCompat.getColor(this@MainActivity, R.color.colorUnfocused))
+                    it.setTextColor(ContextCompat.getColor(this@MainActivity, R.color.colorText))
                 }
             }
 
@@ -85,6 +85,7 @@ class MainActivity : AppCompatActivity() {
                 true
             }
             R.id.action_theme -> {
+                AppCompatDelegate.setDefaultNightMode(MY_THEME_MAGIC_INT - AppCompatDelegate.getDefaultNightMode())
                 true
             }
             else -> super.onOptionsItemSelected(item)
@@ -105,6 +106,7 @@ class MainActivity : AppCompatActivity() {
         const val REQUEST_CODE = 123
         const val SAVED_SELECTED_INDEX = "ssi"
         const val RESULT_CODE = "userInput"
+        const val MY_THEME_MAGIC_INT = 3
         val GROUPS = arrayOf("first", "second", "third", "fourth")
     }
 }
