@@ -9,7 +9,7 @@
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="#000">
+        android:background="@color/colorBackground">
 
         <androidx.constraintlayout.widget.Group
             android:id="@+id/firstGroup"
@@ -125,7 +125,7 @@
             android:id="@+id/firstTitle"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:textColor="#fff"
+            style="@style/AppText.Title"
             tools:text="Movie Title"
             android:layout_margin="@dimen/movieCoverMargin"
             app:layout_constraintLeft_toRightOf="@id/firstMovieImage"
@@ -136,7 +136,7 @@
             android:id="@+id/secondTitle"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:textColor="#fff"
+            style="@style/AppText.Title"
             tools:text="Movie Title"
             android:layout_margin="@dimen/movieCoverMargin"
             app:layout_constraintLeft_toRightOf="@id/secondMovieImage"
@@ -147,7 +147,7 @@
             android:id="@+id/thirdTitle"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:textColor="#fff"
+            style="@style/AppText.Title"
             tools:text="Movie Title"
             android:layout_margin="@dimen/movieCoverMargin"
             app:layout_constraintLeft_toRightOf="@id/thirdMovieImage"
@@ -158,7 +158,7 @@
             android:id="@+id/fourthTitle"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:textColor="#fff"
+            style="@style/AppText.Title"
             tools:text="Movie Title"
             android:layout_margin="@dimen/movieCoverMargin"
             app:layout_constraintLeft_toRightOf="@id/fourthMovieImage"

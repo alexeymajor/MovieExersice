@@ -6,4 +6,7 @@
     <string name="likeBoxText">like?</string>
     <string name="comment">Type you comment here</string>
     <string name="dark_light_theme">dark/light theme</string>
+    <string name="confirmQuit">Закрыть приложение</string>
+    <string name="rejectQuit">не выходить</string>
+    <string name="quitText">выходить или нет?</string>
 </resources>

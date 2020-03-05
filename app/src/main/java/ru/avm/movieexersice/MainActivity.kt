@@ -4,7 +4,7 @@ import android.content.Intent
 import android.os.Bundle
 import android.util.Log
 import android.view.Menu
-import android.view.View
+import android.view.MenuItem
 import android.widget.Button
 import android.widget.ImageView
 import android.widget.TextView
@@ -21,17 +21,15 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
         
-        findViewById<View>(R.id.action_invite).setOnClickListener {
-            Intent().apply {
-                action = Intent.ACTION_SEND
-                type = "text/plain"
-                putExtra(Intent.EXTRA_INTENT, "invite friend")
-                resolveActivity(packageManager)?.let { startActivity(Intent.createChooser(this, "invite")) }
-            }
-        }
-
         savedInstanceState?.let {
             selectedIndex = it.getInt(SAVED_SELECTED_INDEX, -1)
+        }
+    }
+
+    override fun onBackPressed() {
+        QuitDialog(this).let {
+            it.setOnCancelListener{super.onBackPressed()}
+            it.show()
         }
     }
 
@@ -54,9 +52,9 @@ class MainActivity : AppCompatActivity() {
             findViewById<TextView>(resources.getIdentifier("${group}Title", "id", packageName))?.let {
                 it.text = MovieService.movies[index].title
                 if (selectedIndex == index) {
-                    it.setTextColor(ContextCompat.getColor(this@MainActivity, R.color.focused))
+                    it.setTextColor(ContextCompat.getColor(this@MainActivity, R.color.colorFocused))
                 } else {
-                    it.setTextColor(ContextCompat.getColor(this@MainActivity, R.color.unfocused))
+                    it.setTextColor(ContextCompat.getColor(this@MainActivity, R.color.colorUnfocused))
                 }
             }
 
@@ -73,6 +71,24 @@ class MainActivity : AppCompatActivity() {
     override fun onCreateOptionsMenu(menu: Menu?): Boolean {
         menuInflater.inflate(R.menu.menu_main, menu)
         return super.onCreateOptionsMenu(menu)
+    }
+
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        return when (item.itemId) {
+            R.id.action_invite -> {
+                Intent().apply {
+                    action = Intent.ACTION_SEND
+                    type = "text/plain"
+                    putExtra(Intent.EXTRA_INTENT, "invite friend")
+                    resolveActivity(packageManager)?.let { startActivity(Intent.createChooser(this, "invite")) }
+                }
+                true
+            }
+            R.id.action_theme -> {
+                true
+            }
+            else -> super.onOptionsItemSelected(item)
+        }
     }
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
