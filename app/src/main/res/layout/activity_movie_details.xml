@@ -38,10 +38,9 @@
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_margin="@dimen/movieCoverMargin"
-            android:text="@string/likeBoxText"
-            style="@style/AppText.Title"
-            app:layout_constraintLeft_toLeftOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
+            android:button="@drawable/fav_selector"
+            app:layout_constraintEnd_toEndOf="@id/cover"
+            app:layout_constraintBottom_toBottomOf="@id/cover" />
 
         <EditText
             android:id="@+id/commentBox"
