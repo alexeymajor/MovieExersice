@@ -7,46 +7,41 @@ import android.view.Menu
 import android.view.MenuItem
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.app.AppCompatDelegate
-import androidx.recyclerview.widget.LinearLayoutManager
-import androidx.recyclerview.widget.RecyclerView
 import ru.avm.movieexersice.dto.UserInput
-import ru.avm.movieexersice.service.MovieService
 
 class MainActivity : AppCompatActivity() {
-
-    private var selectedIndex: Int = -1
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
-        savedInstanceState?.let {
-            selectedIndex = it.getInt(SAVED_SELECTED_INDEX, -1)
-        }
 
-        initRecycler()
+        val fragment = MovieListFragment()
+        fragment.onDetailsListener = this::showDetails
+
+        supportFragmentManager
+            .beginTransaction()
+            .replace(R.id.fragmentContainer, fragment, MovieListFragment.TAG)
+            .commit()
     }
 
-    private fun initRecycler() {
-        val recycler = findViewById<RecyclerView>(R.id.movieItemsRecycler)
-        val layoutManager = LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false)
-        val movies = ArrayList(MovieService.getMovies())
+    fun showDetails(movieId: Long) {
+        supportFragmentManager
+            .beginTransaction()
+            .replace(R.id.fragmentContainer, MovieDetailsFragment.newInstance(movieId), MovieDetailsFragment.TAG)
+            .addToBackStack(null)
+            .commit()
+    }
 
-        recycler.adapter = MovieAdapter(this, movies)
-        recycler.layoutManager = layoutManager
+    fun showFavorites() {
 
-        recycler.addOnScrollListener(object: RecyclerView.OnScrollListener() {
-            override fun onScrolled(recyclerView: RecyclerView, dx: Int, dy: Int) {
-                if ((recyclerView.layoutManager as LinearLayoutManager).findLastVisibleItemPosition() == movies.size - 1) {
-                    val start = movies.size - 1
-                    val bunch = MovieService.loadBunch()
-                    movies.addAll(MovieService.loadBunch())
+        val fragment = FavoritesListFragment()
+        fragment.onDetailsListener = this::showDetails
 
-                    recyclerView.post {
-                        recyclerView.adapter?.notifyItemRangeInserted(start, bunch.count())
-                    }
-                }
-            }
-        })
+        supportFragmentManager
+            .beginTransaction()
+            .replace(R.id.fragmentContainer, fragment, FavoritesListFragment.TAG)
+            .addToBackStack(null)
+            .commit()
     }
 
     override fun onBackPressed() {
@@ -54,11 +49,6 @@ class MainActivity : AppCompatActivity() {
             it.setOnCancelListener{super.onBackPressed()}
             it.show()
         }
-    }
-
-    override fun onSaveInstanceState(outState: Bundle) {
-        super.onSaveInstanceState(outState)
-        outState.putInt(SAVED_SELECTED_INDEX, selectedIndex)
     }
 
     override fun onCreateOptionsMenu(menu: Menu?): Boolean {
@@ -82,9 +72,7 @@ class MainActivity : AppCompatActivity() {
                 true
             }
             R.id.actionFavorite -> {
-                Intent(this, FavActivity::class.java).apply {
-                    startActivity(this)
-                }
+                showFavorites()
                 true
             }
             else -> super.onOptionsItemSelected(item)

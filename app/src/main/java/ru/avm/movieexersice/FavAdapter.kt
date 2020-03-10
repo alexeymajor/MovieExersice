@@ -1,6 +1,5 @@
 package ru.avm.movieexersice
 
-import android.app.Activity
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -8,9 +7,11 @@ import android.widget.CompoundButton
 import androidx.recyclerview.widget.RecyclerView
 import ru.avm.movieexersice.service.MovieService
 
-class FavAdapter(private val activity: Activity) : RecyclerView.Adapter<MovieViewHolder>() {
+class FavAdapter(
+    private val inflater: LayoutInflater,
+    private val onDetailsListener: ((Long) -> Unit)?
+) : RecyclerView.Adapter<MovieViewHolder>() {
 
-    private val inflater = LayoutInflater.from(activity)
     private var favorites = MovieService.getMovies().filter { movie -> MovieService.favorites.contains(movie.id) }.toMutableList()
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): MovieViewHolder {
@@ -28,8 +29,8 @@ class FavAdapter(private val activity: Activity) : RecyclerView.Adapter<MovieVie
     override fun onBindViewHolder(holder: MovieViewHolder, position: Int) {
         holder.bind(
             favorites[position].title, favorites[position].resource, true,
-            View.OnClickListener {},
-            CompoundButton.OnCheckedChangeListener { _, _ -> }
+            View.OnClickListener { onDetailsListener?.invoke(favorites[position].id) },
+            null
         )
     }
 }
