@@ -3,33 +3,33 @@ package ru.avm.movieexersice
 import android.content.Intent
 import android.os.Bundle
 import android.util.Log
+import android.view.Menu
+import android.view.MenuItem
 import android.widget.Button
 import android.widget.ImageView
 import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
+import androidx.appcompat.app.AppCompatDelegate
 import androidx.core.content.ContextCompat
 import ru.avm.movieexersice.dto.UserInput
 import ru.avm.movieexersice.service.MovieService
 
 class MainActivity : AppCompatActivity() {
 
-    var selectedIndex: Int = -1
+    private var selectedIndex: Int = -1
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
-        
-        findViewById<Button>(R.id.invite).setOnClickListener {
-            Intent().apply {
-                action = Intent.ACTION_SEND
-                type = "text/plain"
-                putExtra(Intent.EXTRA_INTENT, "invite friend")
-                resolveActivity(packageManager)?.let { startActivity(Intent.createChooser(this, "invite")) }
-            }
-        }
-
         savedInstanceState?.let {
             selectedIndex = it.getInt(SAVED_SELECTED_INDEX, -1)
+        }
+    }
+
+    override fun onBackPressed() {
+        QuitDialog(this).let {
+            it.setOnCancelListener{super.onBackPressed()}
+            it.show()
         }
     }
 
@@ -52,9 +52,9 @@ class MainActivity : AppCompatActivity() {
             findViewById<TextView>(resources.getIdentifier("${group}Title", "id", packageName))?.let {
                 it.text = MovieService.movies[index].title
                 if (selectedIndex == index) {
-                    it.setTextColor(ContextCompat.getColor(this@MainActivity, R.color.focused))
+                    it.setTextColor(ContextCompat.getColor(this@MainActivity, R.color.colorAccent))
                 } else {
-                    it.setTextColor(ContextCompat.getColor(this@MainActivity, R.color.unfocused))
+                    it.setTextColor(ContextCompat.getColor(this@MainActivity, R.color.colorText))
                 }
             }
 
@@ -65,6 +65,30 @@ class MainActivity : AppCompatActivity() {
                         putExtra("index", index)
                         startActivityForResult(this, REQUEST_CODE)
                 } }
+        }
+    }
+
+    override fun onCreateOptionsMenu(menu: Menu?): Boolean {
+        menuInflater.inflate(R.menu.menu_main, menu)
+        return super.onCreateOptionsMenu(menu)
+    }
+
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        return when (item.itemId) {
+            R.id.action_invite -> {
+                Intent().apply {
+                    action = Intent.ACTION_SEND
+                    type = "text/plain"
+                    putExtra(Intent.EXTRA_INTENT, "invite friend")
+                    resolveActivity(packageManager)?.let { startActivity(Intent.createChooser(this, "invite")) }
+                }
+                true
+            }
+            R.id.action_theme -> {
+                AppCompatDelegate.setDefaultNightMode(MY_THEME_MAGIC_INT - AppCompatDelegate.getDefaultNightMode())
+                true
+            }
+            else -> super.onOptionsItemSelected(item)
         }
     }
 
@@ -82,6 +106,7 @@ class MainActivity : AppCompatActivity() {
         const val REQUEST_CODE = 123
         const val SAVED_SELECTED_INDEX = "ssi"
         const val RESULT_CODE = "userInput"
-        val GROUPS = arrayOf("first", "second", "third")
+        const val MY_THEME_MAGIC_INT = 3
+        val GROUPS = arrayOf("first", "second", "third", "fourth")
     }
 }

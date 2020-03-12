@@ -1,0 +1,12 @@
+<resources>
+    <string name="app_name">Ищем Кино</string>
+    <string name="movie">Кино</string>
+    <string name="invite">Пригласить</string>
+    <string name="details">Подробно</string>
+    <string name="likeBoxText">Лайкнуть</string>
+    <string name="comment">Введите комментарий</string>
+    <string name="dark_light_theme">сменить тему</string>
+    <string name="confirmQuit">Закрыть приложение</string>
+    <string name="rejectQuit">не выходить</string>
+    <string name="quitText">выходить или нет?</string>
+</resources>
