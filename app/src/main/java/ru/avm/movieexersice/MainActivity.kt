@@ -24,7 +24,7 @@ class MainActivity : AppCompatActivity() {
             .commit()
     }
 
-    fun showDetails(movieId: Long) {
+    private fun showDetails(movieId: Long) {
         supportFragmentManager
             .beginTransaction()
             .replace(R.id.fragmentContainer, MovieDetailsFragment.newInstance(movieId), MovieDetailsFragment.TAG)
@@ -32,7 +32,7 @@ class MainActivity : AppCompatActivity() {
             .commit()
     }
 
-    fun showFavorites() {
+    private fun showFavorites() {
 
         val fragment = FavoritesListFragment()
         fragment.onDetailsListener = this::showDetails
@@ -90,8 +90,8 @@ class MainActivity : AppCompatActivity() {
 
     companion object {
         val TAG = MainActivity::class.java.simpleName
-        const val REQUEST_CODE = 123
-        const val SAVED_SELECTED_INDEX = "ssi"
+//        const val REQUEST_CODE = 123
+//        const val SAVED_SELECTED_INDEX = "ssi"
         const val RESULT_CODE = "userInput"
         const val MY_THEME_MAGIC_INT = 3
     }
