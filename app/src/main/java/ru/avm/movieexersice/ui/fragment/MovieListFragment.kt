@@ -1,14 +1,15 @@
-package ru.avm.movieexersice
+package ru.avm.movieexersice.ui.fragment
 
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.appcompat.widget.Toolbar
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import ru.avm.movieexersice.R
 import ru.avm.movieexersice.service.MovieService
+import ru.avm.movieexersice.ui.adapter.MovieAdapter
 
 class MovieListFragment: Fragment()  {
 
@@ -31,13 +32,7 @@ class MovieListFragment: Fragment()  {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         val recycler = view.findViewById<RecyclerView>(R.id.movieRecycler)
         val layoutManager = LinearLayoutManager(context, LinearLayoutManager.VERTICAL, false)
-
-        val toolbar: Toolbar = view.findViewById(R.id.toolbar)
-        toolbar.title = "title"
-//        setSupportActionBar(toolbar)
-
         val movies = ArrayList(MovieService.getMovies())
-
         val adapter = MovieAdapter(layoutInflater, movies, onDetailsListener)
 
         recycler.adapter = adapter

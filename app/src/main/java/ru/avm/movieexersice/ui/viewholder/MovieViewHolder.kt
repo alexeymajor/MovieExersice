@@ -1,9 +1,9 @@
-package ru.avm.movieexersice
+package ru.avm.movieexersice.ui.viewholder
 
-import android.util.Log
 import android.view.View
 import android.widget.*
 import androidx.recyclerview.widget.RecyclerView
+import ru.avm.movieexersice.R
 
 class MovieViewHolder(movieItem: View) : RecyclerView.ViewHolder(movieItem) {
     private val titleTv: TextView = movieItem.findViewById(R.id.movieItemTitle)
@@ -17,11 +17,7 @@ class MovieViewHolder(movieItem: View) : RecyclerView.ViewHolder(movieItem) {
         favCb.setOnCheckedChangeListener(null)
         favCb.isChecked = isFav
         favCb.setOnCheckedChangeListener(onFav)
-
-        Log.d("asdlakjshdlas", "ASda`111123123131sdasd")
-
         onDetailsListener?.let {
-            Log.d("asdlakjshdlas", "ASdasdasd")
             detailsBtn.setOnClickListener(it)
         }
     }

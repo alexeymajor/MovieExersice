@@ -1,4 +1,4 @@
-package ru.avm.movieexersice
+package ru.avm.movieexersice.ui.fragment
 
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -8,8 +8,11 @@ import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.ItemTouchHelper
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import com.google.android.material.snackbar.Snackbar
+import ru.avm.movieexersice.R
+import ru.avm.movieexersice.ui.adapter.FavAdapter
 
-class FavoritesListFragment: Fragment() {
+class MovieFavoritesListFragment: Fragment() {
 
     var onDetailsListener: ((Long) -> Unit)? = null
 
@@ -24,7 +27,7 @@ class FavoritesListFragment: Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         val layoutManager = LinearLayoutManager(context, LinearLayoutManager.VERTICAL, false)
         val adapter = FavAdapter(layoutInflater, onDetailsListener)
-        val recycler: RecyclerView = view as RecyclerView
+        val recycler = view.findViewById<RecyclerView>(R.id.favoritesRecycler)
         recycler.adapter = adapter
         recycler.layoutManager = layoutManager
 
@@ -36,13 +39,19 @@ class FavoritesListFragment: Fragment() {
             ) = false
 
             override fun onSwiped(viewHolder: RecyclerView.ViewHolder, direction: Int) {
-                adapter.deleteItem(viewHolder.adapterPosition)
+                val position = viewHolder.adapterPosition
+                val deletedId = adapter.deleteItem(position)
+
+                Snackbar.make(view, getString(R.string.snackRemoved), Snackbar.LENGTH_INDEFINITE).apply {
+                    this.setAction(getString(R.string.snackUndo)) { adapter.revertItem(position, deletedId) }
+                    this.show()
+                }
             }
 
         }).attachToRecyclerView(recycler)
     }
 
     companion object {
-        val TAG = FavoritesListFragment::class.java.simpleName
+        val TAG = MovieFavoritesListFragment::class.java.simpleName
     }
 }

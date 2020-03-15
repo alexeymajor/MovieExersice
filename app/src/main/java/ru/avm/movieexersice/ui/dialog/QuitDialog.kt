@@ -1,9 +1,10 @@
-package ru.avm.movieexersice
+package ru.avm.movieexersice.ui.dialog
 
 import android.app.Dialog
 import android.content.Context
 import android.os.Bundle
 import android.widget.Button
+import ru.avm.movieexersice.R
 
 class QuitDialog(context: Context) : Dialog(context) {
 

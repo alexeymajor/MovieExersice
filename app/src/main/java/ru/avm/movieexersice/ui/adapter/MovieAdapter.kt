@@ -1,12 +1,14 @@
-package ru.avm.movieexersice
+package ru.avm.movieexersice.ui.adapter
 
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.CompoundButton
 import androidx.recyclerview.widget.RecyclerView
+import ru.avm.movieexersice.R
 import ru.avm.movieexersice.domain.Movie
 import ru.avm.movieexersice.service.MovieService
+import ru.avm.movieexersice.ui.viewholder.MovieViewHolder
 
 class MovieAdapter(
     private val inflater: LayoutInflater,
@@ -15,7 +17,13 @@ class MovieAdapter(
 ) : RecyclerView.Adapter<MovieViewHolder>() {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): MovieViewHolder {
-        return MovieViewHolder(inflater.inflate(R.layout.item_movie, parent, false))
+        return MovieViewHolder(
+            inflater.inflate(
+                R.layout.item_movie,
+                parent,
+                false
+            )
+        )
     }
 
     override fun getItemCount() = movies.size

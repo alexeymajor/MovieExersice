@@ -10,7 +10,7 @@
             android:orderInCategory="100"
             android:icon="@drawable/ic_favorite_border_24dp"
             app:showAsAction="ifRoom"
-            android:title="@string/dark_light_theme" />
+            android:title="@string/favorites" />
         <item
             android:id="@+id/actionTheme"
             android:orderInCategory="100"
