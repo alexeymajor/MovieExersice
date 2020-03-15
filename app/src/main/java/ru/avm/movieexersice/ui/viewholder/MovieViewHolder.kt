@@ -1,8 +1,9 @@
-package ru.avm.movieexersice
+package ru.avm.movieexersice.ui.viewholder
 
 import android.view.View
 import android.widget.*
 import androidx.recyclerview.widget.RecyclerView
+import ru.avm.movieexersice.R
 
 class MovieViewHolder(movieItem: View) : RecyclerView.ViewHolder(movieItem) {
     private val titleTv: TextView = movieItem.findViewById(R.id.movieItemTitle)
@@ -10,12 +11,14 @@ class MovieViewHolder(movieItem: View) : RecyclerView.ViewHolder(movieItem) {
     private val detailsBtn: Button = movieItem.findViewById(R.id.movieItemButton)
     private val favCb: CheckBox = movieItem.findViewById(R.id.movieItemFav)
 
-    fun bind(title: String, resId: Int, isFav: Boolean, onDetails: View.OnClickListener, onFav: CompoundButton.OnCheckedChangeListener) {
+    fun bind(title: String, resId: Int, isFav: Boolean, onDetailsListener: View.OnClickListener?, onFav: CompoundButton.OnCheckedChangeListener?) {
         titleTv.text = title
         imageIv.setImageResource(resId)
         favCb.setOnCheckedChangeListener(null)
         favCb.isChecked = isFav
         favCb.setOnCheckedChangeListener(onFav)
-        detailsBtn.setOnClickListener(onDetails)
+        onDetailsListener?.let {
+            detailsBtn.setOnClickListener(it)
+        }
     }
 }

@@ -28,6 +28,8 @@ object MovieService {
 
     fun getMovies() = movies.values.toList()
 
+    fun getMovie(id: Long) = movies[id]
+
     fun like(id: Long) {
         favorites.add(id)
     }

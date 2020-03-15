@@ -9,4 +9,9 @@
     <string name="confirmQuit">Закрыть приложение</string>
     <string name="rejectQuit">не выходить</string>
     <string name="quitText">выходить или нет?</string>
+    <string name="menu_home">Домой</string>
+    <string name="nav_header_title">ИщемКино</string>
+    <string name="snackUndo">отменить</string>
+    <string name="snackRemoved">Удалено</string>
+    <string name="favorites">Избранное</string>
 </resources>
