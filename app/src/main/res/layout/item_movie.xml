@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="@dimen/movieGroupHeight">
+
+    <ImageView
+        android:id="@+id/movieItemImage"
+        android:layout_width="@dimen/movieCoverWidth"
+        android:layout_height="0dp"
+        android:layout_margin="@dimen/movieCoverMargin"
+        android:contentDescription="@string/movie"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        tools:src="@drawable/btf1" />
+
+    <CheckBox
+        android:id="@+id/movieItemFav"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_margin="@dimen/movieCoverMargin"
+        android:button="@drawable/fav_selector"
+        app:layout_constraintStart_toStartOf="@id/movieItemImage"
+        app:layout_constraintTop_toTopOf="@id/movieItemImage" />
+
+    <Button
+        android:id="@+id/movieItemButton"
+        android:layout_width="0dp"
+        android:layout_height="@dimen/moveButtonHeight"
+        android:layout_margin="@dimen/movieCoverMargin"
+        android:text="@string/details"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintLeft_toRightOf="@id/movieItemImage"
+        app:layout_constraintRight_toRightOf="parent" />
+
+    <TextView
+        android:id="@+id/movieItemTitle"
+        style="@style/AppText.Title"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_margin="@dimen/movieCoverMargin"
+        app:layout_constraintBottom_toTopOf="@id/movieItemButton"
+        app:layout_constraintLeft_toRightOf="@id/movieItemImage"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        tools:text="Movie Title" />
+
+
+</androidx.constraintlayout.widget.ConstraintLayout>

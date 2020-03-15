@@ -23,7 +23,7 @@ class MovieDetailsActivity : AppCompatActivity() {
         setContentView(R.layout.activity_movie_details)
 
         intent.getIntExtra("index", -1).let {index ->
-            MovieService.movies[index].let {movie ->
+            MovieService.getMovies()[index].let {movie ->
                 findViewById<TextView>(R.id.description)?.text = movie.description
                 findViewById<ImageView>(R.id.cover)?.setImageResource(movie.resource)
                 findViewById<TextView>(R.id.title)?.text = movie.title

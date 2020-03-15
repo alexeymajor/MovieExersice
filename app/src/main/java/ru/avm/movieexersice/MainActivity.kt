@@ -5,12 +5,10 @@ import android.os.Bundle
 import android.util.Log
 import android.view.Menu
 import android.view.MenuItem
-import android.widget.Button
-import android.widget.ImageView
-import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.app.AppCompatDelegate
-import androidx.core.content.ContextCompat
+import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
 import ru.avm.movieexersice.dto.UserInput
 import ru.avm.movieexersice.service.MovieService
 
@@ -24,6 +22,31 @@ class MainActivity : AppCompatActivity() {
         savedInstanceState?.let {
             selectedIndex = it.getInt(SAVED_SELECTED_INDEX, -1)
         }
+
+        initRecycler()
+    }
+
+    private fun initRecycler() {
+        val recycler = findViewById<RecyclerView>(R.id.movieItemsRecycler)
+        val layoutManager = LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false)
+        val movies = ArrayList(MovieService.getMovies())
+
+        recycler.adapter = MovieAdapter(this, movies)
+        recycler.layoutManager = layoutManager
+
+        recycler.addOnScrollListener(object: RecyclerView.OnScrollListener() {
+            override fun onScrolled(recyclerView: RecyclerView, dx: Int, dy: Int) {
+                if ((recyclerView.layoutManager as LinearLayoutManager).findLastVisibleItemPosition() == movies.size - 1) {
+                    val start = movies.size - 1
+                    val bunch = MovieService.loadBunch()
+                    movies.addAll(MovieService.loadBunch())
+
+                    recyclerView.post {
+                        recyclerView.adapter?.notifyItemRangeInserted(start, bunch.count())
+                    }
+                }
+            }
+        })
     }
 
     override fun onBackPressed() {
@@ -38,36 +61,6 @@ class MainActivity : AppCompatActivity() {
         outState.putInt(SAVED_SELECTED_INDEX, selectedIndex)
     }
 
-    override fun onStart() {
-        super.onStart()
-
-        for ((index, group) in GROUPS.withIndex()) {
-            if (index > MovieService.movies.size - 1) {
-                break
-            }
-
-            findViewById<ImageView>(resources.getIdentifier("${group}MovieImage", "id", packageName))
-                ?.setImageResource(MovieService.movies[index].resource)
-
-            findViewById<TextView>(resources.getIdentifier("${group}Title", "id", packageName))?.let {
-                it.text = MovieService.movies[index].title
-                if (selectedIndex == index) {
-                    it.setTextColor(ContextCompat.getColor(this@MainActivity, R.color.colorAccent))
-                } else {
-                    it.setTextColor(ContextCompat.getColor(this@MainActivity, R.color.colorText))
-                }
-            }
-
-            findViewById<Button>(resources.getIdentifier("${group}Button", "id", packageName))
-                ?.setOnClickListener {
-                    selectedIndex = index
-                    Intent(this, MovieDetailsActivity::class.java).apply {
-                        putExtra("index", index)
-                        startActivityForResult(this, REQUEST_CODE)
-                } }
-        }
-    }
-
     override fun onCreateOptionsMenu(menu: Menu?): Boolean {
         menuInflater.inflate(R.menu.menu_main, menu)
         return super.onCreateOptionsMenu(menu)
@@ -75,7 +68,7 @@ class MainActivity : AppCompatActivity() {
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         return when (item.itemId) {
-            R.id.action_invite -> {
+            R.id.actionInvite -> {
                 Intent().apply {
                     action = Intent.ACTION_SEND
                     type = "text/plain"
@@ -84,8 +77,14 @@ class MainActivity : AppCompatActivity() {
                 }
                 true
             }
-            R.id.action_theme -> {
+            R.id.actionTheme -> {
                 AppCompatDelegate.setDefaultNightMode(MY_THEME_MAGIC_INT - AppCompatDelegate.getDefaultNightMode())
+                true
+            }
+            R.id.actionFavorite -> {
+                Intent(this, FavActivity::class.java).apply {
+                    startActivity(this)
+                }
                 true
             }
             else -> super.onOptionsItemSelected(item)
@@ -107,6 +106,5 @@ class MainActivity : AppCompatActivity() {
         const val SAVED_SELECTED_INDEX = "ssi"
         const val RESULT_CODE = "userInput"
         const val MY_THEME_MAGIC_INT = 3
-        val GROUPS = arrayOf("first", "second", "third", "fourth")
     }
 }
